@@ -1,0 +1,165 @@
+<html>
+  <head>
+    <title>carrot &#x1F955;</title>
+    <meta name='viewport' value='width=device-width,initial-scale=1'>
+    <style>body{opacity:0;transition: opacity 0.3s;}</style>
+  </head>
+  <body>
+    <main>
+      <div class='search'>
+        <div class='center'>
+          <div class='heading logo'>carrot &nbsp;&#x1F955;</div>
+          <div class='entry'>
+            <div class='entry-wrap'>
+              <input>
+              <div class='feedback'> 
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-1 0 136 136.21852"><g id="surface1"><path d="M 93.148438 80.832031 C 109.5 57.742188 104.03125 25.769531 80.941406 9.421875 C 57.851562 -6.925781 25.878906 -1.460938 9.53125 21.632812 C -6.816406 44.722656 -1.351562 76.691406 21.742188 93.039062 C 38.222656 104.707031 60.011719 105.605469 77.394531 95.339844 L 115.164062 132.882812 C 119.242188 137.175781 126.027344 137.347656 130.320312 133.269531 C 134.613281 129.195312 134.785156 122.410156 130.710938 118.117188 C 130.582031 117.980469 130.457031 117.855469 130.320312 117.726562 Z M 51.308594 84.332031 C 33.0625 84.335938 18.269531 69.554688 18.257812 51.308594 C 18.253906 33.0625 33.035156 18.269531 51.285156 18.261719 C 69.507812 18.253906 84.292969 33.011719 84.328125 51.234375 C 84.359375 69.484375 69.585938 84.300781 51.332031 84.332031 C 51.324219 84.332031 51.320312 84.332031 51.308594 84.332031 Z M 51.308594 84.332031 " style="stroke:none;fill-rule:nonzero;fill:#5a0e0e;fill-opacity:1"/></g></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class='results hidden'>
+        <div style='padding-bottom:3rem;' class='heading results-heading'>search results...</div>
+      </div>
+    </main>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+      }
+      
+      .entry {
+        position: relative;
+      }
+
+      .entry-wrap {
+        width: 30rem;
+        padding: 0.6rem 0.5rem;
+        border-radius: 0.2rem;
+        background: #f1eee4;
+      }
+
+      .feedback {
+        transition: opacity 0.3s ease-out;
+        height: 100%;
+        width: 2rem;
+        top: 0;
+        right: 0;
+        position: absolute;
+        opacity: 0;
+        display: flex;
+      }
+
+      .logo { font-size: 1.6rem!important; padding-bottom: 3rem;}
+
+      .feedback svg {
+        width: 56%;
+      }
+     
+      .entry-wrap input:focus + .feedback {
+        opacity: 0.5!important;
+      }
+
+      .entry-wrap input {
+        width: 27rem;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 0.9rem;
+      }
+
+      .heading {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #946a4c;
+      }
+
+      .results {
+        width: 100%;
+        flex-direction: column;
+        height: 100vh;
+        padding: 5rem 8rem;
+      }
+
+      .result {
+        padding-bottom: 2rem;
+      }
+
+      .result-heading {
+        color: blue;
+        font-family: sans-serif;
+        font-size: 1.23rem;
+        display: block;
+        padding-bottom: 0.6rem;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .result-url {
+        color: #333; 
+        font-family: sans-serif;
+      }
+    </style>
+
+    <script defer>
+      document.body.style.opacity = 1;
+      const host = window.location.host
+      const entry = document.querySelector('.entry-wrap input')
+      const search = document.querySelector('.search')
+      const results = document.querySelector('.results')
+      const safe = str => String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+      const trim = str => str > 74 ? (str.slice(0, 74) + '...') : str 
+ 
+      const loadResults = res => {
+        for (let site of res) {
+          results.innerHTML += `
+            <div class="result">
+              <a href='${safe(site.url)}' class='result-heading'>${safe(trim(site.title))}</a>
+              <a href='${safe(site.url)}' class='result-url'>${safe(trim(site.url))}</a>
+            </div>`
+        }
+      }
+
+      entry.onkeydown = async e => {
+        if (! (document.querySelector('.entry-wrap input:focus') && e.keyCode === 13) ) return;
+        keywords = entry.value.toLowerCase().trim().split(' ')
+        entry.blur()
+        document.body.style.opacity = 0.3
+        query = `${host}//@${btoa(JSON.stringify(keywords))}@`
+
+        try {
+          res = await fetch(query).then(r => r.json())
+        } catch {
+          res = []
+        }
+        loadResults(res)
+        search.classList.add('hidden')
+        document.body.style.opacity = 1
+        results.classList.remove('hidden')
+      }
+    </script>
+  </body>
+</html>
