@@ -6,8 +6,8 @@
 ### screenshots
 
 #### home page
-![homepage.png](screenshots/homepage.png)
+![homepage.png](images/homepage.png)
 
 #### The results page
 
-![results.png](screenshots/results.png)
+![results.png](images/results.png)
