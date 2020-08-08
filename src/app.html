@@ -131,7 +131,7 @@
       const results = document.querySelector('.results')
       const safe = str => String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-      const trim = str => str > 74 ? (str.slice(0, 74) + '...') : str 
+      const trim = str => str.length > 74 ? (str.slice(0, 74) + '...') : str 
  
       const loadResults = res => {
         for (let site of res) {
