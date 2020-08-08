@@ -17,4 +17,6 @@
 * at some point I'll use data structures to speed up search. The current method is linear.
 * there's no NLP in use - queries like "how do I..." aren't interpreted my the engine.
 * you can use regular expressions to search more precisely.
-* I'd like to add relevence ranking, e.g. PageRank.
+* need to add a page ranking scheme, e.g. PageRank or lexical-distance based.
+* sometimes, duplicate results are returned, fix this.
+* need to implement pagination on results page.
