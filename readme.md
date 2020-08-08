@@ -5,8 +5,8 @@
 
 ### screenshots
 
-#### home page
-![homepage.png](images/homepage.png)
+#### landing page
+![homepage.png](images/landing.png)
 
 #### The results page
 
