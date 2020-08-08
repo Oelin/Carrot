@@ -13,7 +13,7 @@ def get_app():
 
 def search_results(keywords):
   # note results are not output encoded. The client must sanitise the output.
-  return [*map(loads, getoutput(f'cat crawl.log | grep -iwE \'{"|".join(keywords).replace(chr(0x27), chr(0x20))}\'').split('\n'))]
+  return [*map(loads, getoutput(f'cat crawl.log | grep -iwE \'{" ".join(keywords).replace(chr(0x27), chr(0x20))}\'').split('\n'))]
 
 
 def listen():
