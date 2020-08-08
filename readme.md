@@ -20,3 +20,4 @@
 * need to add a page ranking scheme, e.g. PageRank or lexical-distance based.
 * sometimes, duplicate results are returned, fix this.
 * need to implement pagination on results page.
+* the web crawler randomly stops sometimes, requiring a manual restart. Idealy, we'd want it to run for weaks without oversight.
