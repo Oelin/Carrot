@@ -5,15 +5,14 @@ from base64 import b64decode
 from json import loads, dumps
 from socket import socket
 
-def get_app():
-  with open('./app.html') as file:
-    app = file.read()
-  return app
+
+with open('./public/index.html') as file:
+  index = file.read()
 
 
 def search_results(keywords):
   # note results are not output encoded. The client must sanitise the output.
-  return [*map(loads, getoutput(f'grep -m 15 -iwE \'{" ".join(keywords).replace(chr(0x27), chr(0x20))}\' crawl.log').split('\n'))]
+  return [*map(loads, getoutput(f'grep -m 15 -iwE \'{" ".join(keywords).replace(chr(0x27), chr(0x20))}\' ./index.lst').split('\n'))]
 
 
 def listen():
@@ -24,13 +23,13 @@ def listen():
   while 1:
     try:
       client, _ = s.accept()
-      thread(service, (client,))
+      thread(app, (client,))
       print(f'serviced connection from {_}')
     except:
       s.close()
 
 
-def service(client):
+def app(client):
   try:
     message = str(client.recv(4096), 'utf-8')
 
@@ -42,7 +41,7 @@ def service(client):
         reply = dumps(search_results(keywords))
         mime = 'application/json'
     else:
-      reply = get_app()
+      reply = index
       mime = 'text/html'
 
   except:
@@ -51,5 +50,6 @@ def service(client):
 
   client.send(bytes(f'HTTP/1.1 200 OK\r\n{mime}\r\n\r\n{reply}\r\n\r\n\r\n', 'utf-8'))
   client.close()
+
 
 listen()

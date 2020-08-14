@@ -5,6 +5,7 @@ from os import system
 from sys import argv
 from json import dumps
 
+
 urlre = 'src|href=["\']([a-zA-Z0-9\./\-%\?=:]+)["\']'
 
 
